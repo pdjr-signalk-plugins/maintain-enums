@@ -1,0 +1,38 @@
+{
+    "type": "object",
+    "required": ["endpoints"],
+    "properties": {
+        "enumerations": {
+            "type": "array",
+            "title": "Enumeration definitions",
+            "items": {
+                "type": "object",
+                "title": "Enumeration",
+                "required": ["sourceePath", "maintainedPath", "map"],
+                "properties": {
+                    "sourcePath": {
+                        "title": "Source path",
+                        "type": "string"
+                    },
+                    "maintainedPath": {
+                        "title": "Source path",
+                        "type": "string"
+                    },
+                    "undefinedValue": {
+                        "type": "string"
+                    },
+                    "map": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "a": { "type": "number" },
+                                "b": { "type": "string" }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

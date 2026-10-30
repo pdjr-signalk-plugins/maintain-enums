@@ -1,0 +1,28 @@
+{
+  "name": "signalk-libpluginstatus",
+  "version": "1.0.0",
+  "description": "Plugin status message manager",
+  "main": "dist/PluginStatus.js",
+  "types": "dist/PluginStatus.d.ts",
+  "scripts": {
+    "clean": "rm -rf node_modules package-lock.json *.tgz",
+    "make": "npm install && tsc",
+    "pack": "npm pack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pdjr-signalk/signalk-libpluginstatus.git"
+  },
+  "author": "Paul Reeve <preeve_at_pdjr_dot_eu>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/pdjr-signalk/signalk-libpluginstatus/issues"
+  },
+  "homepage": "https://github.com/pdjr-signalk/signalk-libpluginstatus#readme",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.4",
+    "typescript": "^5.7.2"
+  }
+}

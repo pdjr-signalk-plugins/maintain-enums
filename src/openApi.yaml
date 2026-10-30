@@ -1,0 +1,189 @@
+openapi: 3.0.3
+info:
+  title: Maintain enums API
+  version: 2026.10.23
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  description: |
+    [maintain-enums](https://github.com/pdjr-signalk-plugins/maintain-enums)
+    is a plugin for the
+    [Signal K node server](https://github.com/SignalK/signalk-server).
+
+    A Signal K server hosting the plugin will present this API under
+    the root https://*server_ip*:*server_port*/plugins/maintain-enums.
+externalDocs:
+  description: Plugin README document
+  url: https://github.com/pdjr-signalk-plugins/maintain-enums#readme 
+paths:
+  /start:
+    get:
+      description: |
+        Start transmitting to one or all endpoints.
+      parameters:
+        - in: query
+          name: name
+          schema:
+            type: string
+          description: |
+            Name of endpoint to be started.
+      responses:
+        '200':
+          description: |
+            Success.
+            Transmission started.
+        '400':
+          description: |
+            Bad request.
+            The specified parameter name is invalid.
+        '404':
+          description: |
+            Not found.
+            The specified endpoint name does not exist.
+        '500':
+          description: |
+            Error.
+            The server was unable to service the request.
+  /stop:
+    get:
+      description: |
+        Stop transmitting to one or all endpoints.
+      parameters:
+        - in: query
+          name: name
+          schema:
+            type: string
+          description: |
+            Name of endpoint to be stopped.
+      responses:
+        '200':
+          description: |
+            Success.
+            Transmission stopped.
+        '400':
+          description: |
+            Bad request.
+            The specified parameter name is invalid.
+        '404':
+          description: |
+            Not found.
+            The specified endpoint name does not exist.
+        '500':
+          description: |
+            Error.
+            The server was unable to service the request.
+  /status:
+    get:
+      description: |
+        Get the status of one or all configured endpoints.
+      parameters:
+        - in: query
+          name: name
+          schema:
+            type: string
+          description: |
+            Name of endpoint to be stopped.
+      responses:
+        '200':
+          description: |
+            Success.
+            if {name} is specified the response body is an object
+            containing a status report for the named endpoint,
+            otherwise the response body is a dictionary object
+            containing a status report for each defined endpoint.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      name:
+                        description: Endpoint identifier.
+                        type: string
+                        example: marine-traffic
+                      ipAddress:
+                        description: IP address of the report endpoint.
+                        type: string
+                        example: 192.168.1.12
+                      port:
+                        description: Port number of the report endpoint.
+                        type: integer
+                        example: 12345
+                      started:
+                        description: Time (UTC) at which the plugin commenced operation.
+                        type: string
+                        format: date-time
+                        example: 2024-12-19T09:31:26.774Z
+                      totalBytesTransmitted:
+                        description: Number of bytes transmitted to the endpoint since the plugin started.
+                        type: integer
+                        example: 457683
+                      positionSelfBytesPerHour:
+                        description: Number of bytes transmitted to the endpoint per hour as part of a position report for vessel 'self'.
+                        type: integer
+                        example: 456
+                      positionOthersBytesPerHour:
+                        description: Number of bytes transmitted to the endpoint per hour as part of position reports for all vessels other than 'self'.
+                        type: integer
+                        example: 912
+                      staticSelfBytesPerHour:
+                        description: Number of bytes transmitted to the endpoint per hour as part of a static data report for vessel 'self'.
+                        type: integer
+                        example: 456
+                      staticOthersBytesPerHour:
+                        description: Number of bytes transmitted to the endpoint per hour as part of static data reports for all vessels other than 'self'.
+                        type: integer
+                        example: 912
+                  - type: object
+                    additionalProperties:
+                      type: object
+                      properties:
+                        name:
+                          description: Endpoint identifier.
+                          type: string
+                          example: marine-traffic
+                        ipAddress:
+                          description: IP address of the report endpoint.
+                          type: string
+                          example: 192.168.1.12
+                        port:
+                          description: Port number of the report endpoint.
+                          type: integer
+                          example: 12345
+                        started:
+                          description: Time (UTC) at which the plugin commenced operation.
+                          type: string
+                          format: date-time
+                          example: 2024-12-19T09:31:26.774Z
+                        totalBytesTransmitted:
+                          description: Number of bytes transmitted to the endpoint since the plugin started.
+                          type: integer
+                          example: 457683
+                        positionSelfBytesPerHour:
+                          description: Number of bytes transmitted to the endpoint per hour as part of a position report for vessel 'self'.
+                          type: integer
+                          example: 456
+                        positionOthersBytesPerHour:
+                          description: Number of bytes transmitted to the endpoint per hour as part of position reports for all vessels other than 'self'.
+                          type: integer
+                          example: 912
+                        staticSelfBytesPerHour:
+                          description: Number of bytes transmitted to the endpoint per hour as part of a static data report for vessel 'self'.
+                          type: integer
+                          example: 456
+                        staticOthersBytesPerHour:
+                          description: Number of bytes transmitted to the endpoint per hour as part of static data reports for all vessels other than 'self'.
+                          type: integer
+                          example: 912
+        '400':
+          description: |
+            Bad request.
+            The specified parameter name is invalid.
+        '404':
+          description: |
+            Not found.
+            The specified endpoint name does not exist.
+        '500':
+          description: |
+            Error.
+            The server was unable to service the request.
