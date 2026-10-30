@@ -52,7 +52,6 @@ module.exports = function(app: any) {
             app.streambundle.getSelfStream(enumeration.sourcePath)
             .skipDuplicates()
             .onValue((n: number) => {
-              app.debug(`new value ${n} on ${enumeration.sourcePath}`);
               var nv: string = enumeration.map.reduce((a,m) => (m.a == n)?m.b:a, enumeration.undefinedValue);
               app.debug(`mapping ${n} on ${enumeration.sourcePath} to '${nv}' on ${enumeration.maintainedPath}`);
               delta.addValue(enumeration.maintainedPath, nv).commit().clear();

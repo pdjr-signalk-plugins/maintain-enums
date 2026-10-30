@@ -9,11 +9,11 @@ class Enumeration {
         this.undefinedValue = "Not available";
         this.map = [];
         if (!options[0].hasOwnProperty('sourcePath'))
-            throw new Error('Required sourcePath property is missing');
+            throw new Error('required sourcePath property is missing');
         if (!options[0].hasOwnProperty('maintainedPath'))
-            throw new Error('Required enumerationPath property is missing');
+            throw new Error('required enumerationPath property is missing');
         if (!options[0].hasOwnProperty('map'))
-            throw new Error('Required map property is missing');
+            throw new Error('required map property is missing');
         this.app = app;
         this.sourcePath = getOption(options, 'sourcePath');
         this.maintainedPath = getOption(options, 'maintainedPath');
