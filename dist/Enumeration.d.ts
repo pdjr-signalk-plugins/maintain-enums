@@ -1,7 +1,7 @@
 export declare class Enumeration {
     app: any;
     sourcePath: string;
-    enumerationPath: string;
+    maintainedPath: string;
     undefinedValue: string;
     map: Map[];
     constructor(options: any[], app: any);

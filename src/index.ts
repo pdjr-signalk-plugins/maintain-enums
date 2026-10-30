@@ -53,7 +53,7 @@ module.exports = function(app: any) {
             .skipDuplicates()
             .onValue((n: number) => {
               var nv: string = enumeration.map.reduce((a,m) => (m.a == n)?m.b:a, enumeration.undefinedValue);
-              delta.addValue(enumeration.enumerationPath, nv).commit().clear();
+              delta.addValue(enumeration.maintainedPath, nv).commit().clear();
             })
           ));
           pluginStatus.setDefaultStatus(`Started: maintaining ${pluginConfiguration.enumerations.length} enumerations`);
@@ -104,7 +104,7 @@ module.exports = function(app: any) {
     try {
       switch (req.path.slice(0, (req.path.indexOf('/', 1) == -1)?undefined:req.path.indexOf('/', 1))) {
         case '/status':
-          var statusResponse: any = {};
+          var statusResponse: Dictionary<Status> = { };
           pluginConfiguration.enumerations.forEach((enumeration) => {
           });
           expressSend(res, 200, statusResponse, req.path);

@@ -47,7 +47,7 @@ module.exports = function (app) {
                         .skipDuplicates()
                         .onValue((n) => {
                         var nv = enumeration.map.reduce((a, m) => (m.a == n) ? m.b : a, enumeration.undefinedValue);
-                        delta.addValue(enumeration.enumerationPath, nv).commit().clear();
+                        delta.addValue(enumeration.maintainedPath, nv).commit().clear();
                     })));
                     pluginStatus.setDefaultStatus(`Started: maintaining ${pluginConfiguration.enumerations.length} enumerations`);
                 }
