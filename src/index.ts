@@ -146,15 +146,10 @@ interface PluginConfiguration {
 }
 
 interface Status {
-  name?: string,
-  ipAddress?: string,
-  enabled?: boolean,
-  port?: number,
-  started?: string,
-  totalBytesTransmitted?: number,
-  positionSelfBytesPerHour?: number,
-  positionOthersBytesPerHour?: number,
-  staticSelfBytesPerHour?: number,
-  staticOthersBytesPerHour?: number
+  path: string
+}
+
+interface Dictionary<T> {
+  [key: string]: T
 }
 

@@ -49,96 +49,69 @@ module.exports = function (app) {
                         var nv = enumeration.map.reduce((a, m) => (m.a == n) ? m.b : a, enumeration.undefinedValue);
                         delta.addValue(enumeration.enumerationPath, nv).commit().clear();
                     })));
+                    pluginStatus.setDefaultStatus(`Started: maintaining ${pluginConfiguration.enumerations.length} enumerations`);
                 }
-                ;
-                pluginStatus.setDefaultStatus(`Started: maintaining ${pluginConfiguration.enumerations.length} enumerations`);
+                else {
+                    pluginStatus.setDefaultStatus('Stopped: no configured endpoints');
+                }
             }
-            finally { }
-        }, else: {
-            pluginStatus, : .setDefaultStatus('Stopped: no configured endpoints')
+            catch (e) {
+                pluginStatus.setDefaultStatus('Stopped: configuration error');
+                app.debug(`${e.lineNumber}: ${e.message}`);
+            }
+        },
+        stop: function () {
+            unsubscribes.forEach((f) => f());
+            unsubscribes = [];
+        },
+        registerWithRouter: function (router) {
+            router.get('/status', handleRoutes);
+        },
+        getOpenApi: function () {
+            return (require('./openApi.json'));
         }
     };
-    try { }
-    catch (e) {
-        pluginStatus.setDefaultStatus('Stopped: configuration error');
-        app.debug(`${e.lineNumber}: ${e.message}`);
+    /**
+     * Create a canonical plugin configuration from the user-supplied
+     * JSON configuration. Global and default properties are consolidated
+     * so that all properties reside within endpoint object definitions.
+     *
+     * Fatal errors cause an exception.
+     *
+     * @param options - contenf of JSON configuration file.
+     * @returns - a canonical PluginConfiguration.
+     */
+    function makePluginConfiguration(options, defaults) {
+        var retval = {
+            enumerations: options.enumerations.map((option) => new Enumeration_1.Enumeration([option, options, defaults], app))
+        };
+        return (retval);
     }
-},
-    stop;
-function () {
-    unsubscribes.forEach((f) => f());
-    unsubscribes = [];
-}
-registerWithRouter: function (router) {
-    router.get('/status', handleRoutes);
-}
-getOpenApi: function () {
-    return (require('./openApi.json'));
-}
-/**
- * Create a canonical plugin configuration from the user-supplied
- * JSON configuration. Global and default properties are consolidated
- * so that all properties reside within endpoint object definitions.
- *
- * Fatal errors cause an exception.
- *
- * @param options - contenf of JSON configuration file.
- * @returns - a canonical PluginConfiguration.
- */
-function makePluginConfiguration(options, defaults) {
-    var retval = {
-        enumerations: options.enumerations.map((option) => new Enumeration_1.Enumeration([option, options, defaults], app))
-    };
-    return (retval);
-}
-function handleRoutes(req, res) {
-    app.debug(`handleRoutes(${req.method}, ${req.path})...`);
-    var status;
-    try {
-        if (Object.keys(req.query).length != 0) {
-            if (req.query.name === undefined)
-                throw new Error("400");
-            if (!pluginConfiguration.endpoints.map((e) => e.name).includes(req.query.name))
-                throw new Error("404");
+    function handleRoutes(req, res) {
+        app.debug(`handleRoutes(${req.method}, ${req.path})...`);
+        var status;
+        try {
+            switch (req.path.slice(0, (req.path.indexOf('/', 1) == -1) ? undefined : req.path.indexOf('/', 1))) {
+                case '/status':
+                    var statusResponse = {};
+                    pluginConfiguration.enumerations.forEach((enumeration) => {
+                    });
+                    expressSend(res, 200, statusResponse, req.path);
+                    break;
+                default:
+                    break;
+            }
         }
-        switch (req.path.slice(0, (req.path.indexOf('/', 1) == -1) ? undefined : req.path.indexOf('/', 1))) {
-            case '/status':
-                var statusResponse = {};
-                pluginConfiguration.endpoints.forEach((endpoint) => {
-                    let hours = (endpoint.statistics.started) ? (Date.now() - endpoint.statistics.started) / 3600000 : 1;
-                    var status = {
-                        name: endpoint.name,
-                        ipAddress: endpoint.ipAddress,
-                        port: endpoint.port,
-                        started: (endpoint.statistics.started) ? (new Date(endpoint.statistics.started)).toISOString() : 'never',
-                        totalBytesTransmitted: endpoint.statistics.totalBytes,
-                        positionSelfBytesPerHour: Math.floor(endpoint.statistics.position.self.bytes / hours),
-                        positionOthersBytesPerHour: Math.floor(endpoint.statistics.position.others.bytes / hours),
-                        staticSelfBytesPerHour: Math.floor(endpoint.statistics.static.self.bytes / hours),
-                        staticOthersBytesPerHour: Math.floor(endpoint.statistics.static.others.bytes / hours)
-                    };
-                    if ((Object.keys(req.query).length === 0)) {
-                        statusResponse[endpoint.name] = status;
-                    }
-                    else if (req.query.name == endpoint.name) {
-                        statusResponse = status;
-                    }
-                });
-                expressSend(res, 200, statusResponse, req.path);
-                break;
-            default:
-                break;
+        catch (e) {
+            app.debug(e.message);
+            expressSend(res, ((/^\d+$/.test(e.message)) ? parseInt(e.message) : 500), null, req.path);
+        }
+        function expressSend(res, code, body, debugPrefix = null) {
+            app.debug(`expressSend(res, ${code}, ${JSON.stringify(body)}, ${debugPrefix})...`);
+            const FETCH_RESPONSES = { "200": "Ok", "201": null, "400": "bad request", "403": "forbidden", "404": "not found", "503": "service unavailable (try again later)", "500": "internal server error" };
+            res.status(code).send((body) ? body : ((FETCH_RESPONSES['' + code]) ? FETCH_RESPONSES['' + code] : null));
+            return (false);
         }
     }
-    catch (e) {
-        app.debug(e.message);
-        expressSend(res, ((/^\d+$/.test(e.message)) ? parseInt(e.message) : 500), null, req.path);
-    }
-    function expressSend(res, code, body, debugPrefix = null) {
-        app.debug(`expressSend(res, ${code}, ${JSON.stringify(body)}, ${debugPrefix})...`);
-        const FETCH_RESPONSES = { "200": "Ok", "201": null, "400": "bad request", "403": "forbidden", "404": "not found", "503": "service unavailable (try again later)", "500": "internal server error" };
-        res.status(code).send((body) ? body : ((FETCH_RESPONSES['' + code]) ? FETCH_RESPONSES['' + code] : null));
-        return (false);
-    }
-}
-return (plugin);
+    return (plugin);
+};
