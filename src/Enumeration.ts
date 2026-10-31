@@ -17,7 +17,7 @@ export class Enumeration {
     this.source = getOption(options, 'source');
     this.range = getOption(options, 'range');
     this.undefinedValue = getOption(options, 'undefinedValue') || 'Not available'
-    this.map = getOptionArray(options, 'map');
+    this.map = getOptionArray(options, 'map').sort((a: Map, b: Map) => (a.s - b.s));
 
     /**
      * 
