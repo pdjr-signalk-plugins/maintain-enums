@@ -54,8 +54,8 @@ required enumeration value.
         "source": "electrical.switches.bank.10.5.state",
         "range": "navigation.maneuver",
         "map": [ 
-          { "s": 0, "r": "Not engaged" },
-          { "s": 1, "r": "Engaged" }
+          { "s": 0, "r": "No special maneuver" },
+          { "s": 1, "r": "Special maneuver" }
         ]
       }  
     ]  

@@ -36,7 +36,7 @@ paths:
                     value:
                       description: Current enumeration (range) value
                       type: string
-                      example: Not engaged
+                      example: No special maneuver
                     source:
                       description: Source path
                       type: string
