@@ -108,9 +108,9 @@ module.exports = function(app: any) {
           var statusResponse: Dictionary<Status> = { };
           pluginConfiguration.enumerations.forEach((enumeration) => {
             statusResponse[enumeration.range] = {
-              value: app.getSelfPath(enumeration.range),
+              value: app.getSelfPath(enumeration.range + '.value'),
               source: enumeration.source,
-              sourceValue: app.getSelfPath(enumeration.source)
+              sourceValue: app.getSelfPath(enumeration.source + '.value')
             };
           });
           expressSend(res, 200, statusResponse, req.path);
