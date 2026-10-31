@@ -8,14 +8,14 @@
       "items": {
         "type": "object",
         "title": "Enumeration",
-        "required": ["sourceePath", "maintainedPath", "map"],
+        "required": ["sourcee", "range", "map"],
         "properties": {
-          "sourcePath": {
+          "source": {
             "title": "Source path",
             "type": "string"
           },
-          "maintainedPath": {
-            "title": "Source path",
+          "range": {
+            "title": "Range path",
             "type": "string"
           },
           "undefinedValue": {
@@ -26,8 +26,8 @@
             "items": {
               "type": "object",
               "properties": {
-                "a": { "type": "number" },
-                "b": { "type": "string" }            
+                "s": { "type": "number" },
+                "r": { "type": "string" }            
               }
             }
           }

@@ -49,12 +49,12 @@ module.exports = function(app: any) {
 
         if (pluginConfiguration.enumerations.length > 0) {
           unsubscribes = pluginConfiguration.enumerations.map((enumeration) => (
-            app.streambundle.getSelfStream(enumeration.sourcePath)
+            app.streambundle.getSelfStream(enumeration.source)
             .skipDuplicates()
             .onValue((n: number) => {
-              var nv: string = enumeration.map.reduce((a,m) => (m.a == n)?m.b:a, enumeration.undefinedValue);
-              app.debug(`mapping ${n} on ${enumeration.sourcePath} to '${nv}' on ${enumeration.maintainedPath}`);
-              delta.addValue(enumeration.maintainedPath, nv).commit().clear();
+              var nv: string = enumeration.map.reduce((a,m) => (m.s >= n)?m.r:a, enumeration.undefinedValue);
+              app.debug(`mapping ${n} on ${enumeration.source} to '${nv}' on ${enumeration.range}`);
+              delta.addValue(enumeration.range, nv).commit().clear();
             })
           ));
           pluginStatus.setDefaultStatus(`Started: maintaining ${pluginConfiguration.enumerations.length} enumerations`);
@@ -153,4 +153,3 @@ interface Status {
 interface Dictionary<T> {
   [key: string]: T
 }
-

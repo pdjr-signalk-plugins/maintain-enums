@@ -4,19 +4,19 @@ exports.Enumeration = void 0;
 class Enumeration {
     constructor(options, app) {
         this.app = undefined;
-        this.sourcePath = '';
-        this.maintainedPath = '';
+        this.source = '';
+        this.range = '';
         this.undefinedValue = "Not available";
         this.map = [];
-        if (!options[0].hasOwnProperty('sourcePath'))
-            throw new Error('required sourcePath property is missing');
-        if (!options[0].hasOwnProperty('maintainedPath'))
-            throw new Error('required enumerationPath property is missing');
+        if (!options[0].hasOwnProperty('source'))
+            throw new Error(`required 'source' property is missing`);
+        if (!options[0].hasOwnProperty('range'))
+            throw new Error(`required 'range' property is missing`);
         if (!options[0].hasOwnProperty('map'))
-            throw new Error('required map property is missing');
+            throw new Error(`required 'map' property is missing`);
         this.app = app;
-        this.sourcePath = getOption(options, 'sourcePath');
-        this.maintainedPath = getOption(options, 'maintainedPath');
+        this.source = getOption(options, 'source');
+        this.range = getOption(options, 'range');
         this.undefinedValue = getOption(options, 'undefinedValue') || 'Not available';
         this.map = getOptionArray(options, 'map');
         /**
