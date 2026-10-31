@@ -2,13 +2,17 @@
   "type": "object",
   "required": [ "endpoints" ],
   "properties": {
+    "undefinedValue": {
+      "title": "Value to be used when any 'source' path is undefined or inactive",
+      "type": "string"
+    },
     "enumerations": {
       "type": "array",
       "title": "Enumeration definitions",
       "items": {
         "type": "object",
         "title": "Enumeration",
-        "required": ["sourcee", "range", "map"],
+        "required": ["source", "range", "map"],
         "properties": {
           "source": {
             "title": "Source path",
@@ -19,9 +23,11 @@
             "type": "string"
           },
           "undefinedValue": {
+            "title": "Value to be used when this 'source' path is undefined or inactive",
             "type": "string"
           },
           "map": {
+            "title": "Array of source to range value mappings",
             "type": "array",
             "items": {
               "type": "object",

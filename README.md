@@ -39,18 +39,20 @@ an *s* value then the corresponding *r* value will be written to
 
 ## Example configurations
 
-This example converts the value of a switch which operates a blue board
-into the enumeration value required by the Signal K specification on
-`navigation.maneuver`.
+This example maintains `navigation.maneuver` in line with the
+requirement of the
+[Signal K specification](https://github.com/SignalK/specification/)
+by mapping the value of a switch which operates a blue board into the
+required enumeration value.
 
 ```json
 {
   "configuration": {
+    "undefinedValue": "Not available",
     "enumerations": [
       {
         "source": "electrical.switches.bank.10.5.state",
         "range": "navigation.maneuver",
-        "undefinedValue": "Not available",
         "map": [ 
           { "s": 0, "r": "Not engaged" },
           { "s": 1, "r": "Engaged" }

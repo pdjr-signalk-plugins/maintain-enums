@@ -52,7 +52,7 @@ module.exports = function(app: any) {
             app.streambundle.getSelfStream(enumeration.source)
             .skipDuplicates()
             .onValue((n: number) => {
-              var nv: string = enumeration.map.reduce((a,m) => (m.s == n)?m.r:a, enumeration.undefinedValue);
+              var nv: string = enumeration.map.reduce((a,m) => (n >= m.s)?m.r:a, enumeration.undefinedValue);
               app.debug(`mapping ${n} on ${enumeration.source} to '${nv}' on ${enumeration.range}`);
               delta.addValue(enumeration.range, nv).commit().clear();
             })
@@ -107,6 +107,11 @@ module.exports = function(app: any) {
         case '/status':
           var statusResponse: Dictionary<Status> = { };
           pluginConfiguration.enumerations.forEach((enumeration) => {
+            statusResponse[enumeration.range] = {
+              value: app.getSelfPath(enumeration.range),
+              source: enumeration.source,
+              sourceValue: app.getSelfPath(enumeration.source)
+            };
           });
           expressSend(res, 200, statusResponse, req.path);
           break;
@@ -147,7 +152,9 @@ interface PluginConfiguration {
 }
 
 interface Status {
-  path: string
+  value: string,
+  source: string,
+  sourceValue: number
 }
 
 interface Dictionary<T> {
