@@ -46,7 +46,7 @@ module.exports = function (app) {
                     unsubscribes = pluginConfiguration.enumerations.map((enumeration) => (app.streambundle.getSelfStream(enumeration.source)
                         .skipDuplicates()
                         .onValue((n) => {
-                        var nv = enumeration.map.reduce((a, m) => (m.s >= n) ? m.r : a, enumeration.undefinedValue);
+                        var nv = enumeration.map.reduce((a, m) => (m.s == n) ? m.r : a, enumeration.undefinedValue);
                         app.debug(`mapping ${n} on ${enumeration.source} to '${nv}' on ${enumeration.range}`);
                         delta.addValue(enumeration.range, nv).commit().clear();
                     })));
