@@ -42,7 +42,7 @@ module.exports = function(app: any) {
   
     start: function(options: any) {
       var delta = new Delta(app, plugin.id);
-      pluginStatus = new PluginStatus(app, `started`);
+      pluginStatus = new PluginStatus(app, `Started`);
 
       try {
         pluginConfiguration = makePluginConfiguration(options, DEFAULT_ENUMERATION_OPTIONS);
@@ -57,7 +57,7 @@ module.exports = function(app: any) {
               delta.addValue(enumeration.range, nv).commit().clear();
             })
           ));
-          pluginStatus.setDefaultStatus(`Started: maintaining ${pluginConfiguration.enumerations.length} enumerations`);
+          pluginStatus.setDefaultStatus(`Started: maintaining ${pluginConfiguration.enumerations.length} enumeration${(pluginConfiguration.enumerations.length == 1)?'':'s'}`);
         } else {
           pluginStatus.setDefaultStatus('Stopped: no configured enumerations');
         }

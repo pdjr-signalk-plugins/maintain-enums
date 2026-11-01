@@ -39,7 +39,7 @@ module.exports = function (app) {
         uiSchema: uischema_json_1.default,
         start: function (options) {
             var delta = new signalk_libdelta_1.Delta(app, plugin.id);
-            pluginStatus = new signalk_libpluginstatus_1.PluginStatus(app, `started`);
+            pluginStatus = new signalk_libpluginstatus_1.PluginStatus(app, `Started`);
             try {
                 pluginConfiguration = makePluginConfiguration(options, DEFAULT_ENUMERATION_OPTIONS);
                 if (pluginConfiguration.enumerations.length > 0) {
@@ -50,7 +50,7 @@ module.exports = function (app) {
                         app.debug(`mapping ${n} on ${enumeration.source} to '${nv}' on ${enumeration.range}`);
                         delta.addValue(enumeration.range, nv).commit().clear();
                     })));
-                    pluginStatus.setDefaultStatus(`Started: maintaining ${pluginConfiguration.enumerations.length} enumerations`);
+                    pluginStatus.setDefaultStatus(`Started: maintaining ${pluginConfiguration.enumerations.length} enumeration${(pluginConfiguration.enumerations.length == 1) ? '' : 's'}`);
                 }
                 else {
                     pluginStatus.setDefaultStatus('Stopped: no configured enumerations');
