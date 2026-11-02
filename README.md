@@ -5,7 +5,7 @@ Create and maintain paths containing enumerated values.
 **maintain-enums** is a
 [Signal K](https://www.signalk.org/)
 plugin which maps numeric values on some specified Signal K path
-into arbitrary, though often string, values on some other path.
+into values, string or numeric, on some other path.
 
 ## System requirements
 

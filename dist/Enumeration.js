@@ -35,14 +35,6 @@ class Enumeration {
             });
             return (retval);
         }
-        function getOptionArray(options, name) {
-            var retval = undefined;
-            options.reverse().forEach((opt) => {
-                if (opt.hasOwnProperty(name))
-                    retval = (Array.isArray(opt[name])) ? opt[name] : [opt[name]];
-            });
-            return (retval);
-        }
     }
 }
 exports.Enumeration = Enumeration;
