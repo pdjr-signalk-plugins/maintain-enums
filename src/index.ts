@@ -26,7 +26,7 @@ const PLUGIN_NAME: string = 'maintain-enums';
 const PLUGIN_DESCRIPTION: string = 'Create and maintain paths containing enumerated values.';
 import PLUGIN_SCHEMA from './schema.json';
 import PLUGIN_UISCHEMA from './uischema.json';
-import { Enumeration } from './Enumeration';
+import { Enumeration, EnumerationMap } from './Enumeration';
 
 module.exports = function(app: any) {
   var unsubscribes: (() => void)[] = [];
@@ -52,7 +52,7 @@ module.exports = function(app: any) {
             app.streambundle.getSelfStream(enumeration.source)
             .skipDuplicates()
             .onValue((n: number) => {
-              var nv: any = enumeration.map.reduce((a,m) => (n >= m.s)?m.r:a, enumeration.undefinedValue);
+              var nv: any = enumeration.map.reduce((a: number | string, m: EnumerationMap) => (n >= m.s)?m.r:a, enumeration.undefinedValue);
               app.debug(`mapping ${n} on ${enumeration.source} to ${(typeof nv === 'string')?'"':''}${nv}${(typeof nv === 'string')?'"':''} on ${enumeration.range}`);
               delta.addValue(enumeration.range, nv).commit().clear();
             })

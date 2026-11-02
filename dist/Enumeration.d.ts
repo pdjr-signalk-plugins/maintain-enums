@@ -3,11 +3,11 @@ export declare class Enumeration {
     source: string;
     range: string;
     undefinedValue: number | string;
-    map: Map[];
+    map: EnumerationMap[];
     constructor(options: any[], app: any);
 }
-interface Map {
+export type { EnumerationMap };
+interface EnumerationMap {
     s: number;
     r: number | string;
 }
-export {};

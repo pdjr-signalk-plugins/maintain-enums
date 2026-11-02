@@ -6,7 +6,7 @@ export class Enumeration {
   public source: string = '';
   public range: string = '';
   public undefinedValue: number | string;
-  public map: Map[] = [];
+  public map: EnumerationMap[] = [];
 
   constructor(options: any[], app: any) {
     if (!options[0].hasOwnProperty('source')) throw new Error(`required 'source' property is missing`);
@@ -17,7 +17,7 @@ export class Enumeration {
     this.source = getOption(options[0], 'source');
     this.range = getOption(options[0], 'range');
     this.undefinedValue = getOption(options, 'undefinedValue');
-    this.map = getOptionArray(options[0], 'map').sort((a: Map, b: Map) => (a.s - b.s));
+    this.map = getOptionArray(options[0], 'map').sort((a: EnumerationMap, b: EnumerationMap) => (a.s - b.s));
 
     this.map.forEach((m) => {
       if (typeof m.r !== typeof this.undefinedValue) throw new Error('type mismatch');
@@ -48,7 +48,9 @@ export class Enumeration {
   }
 }
 
-interface Map {
+export type { EnumerationMap };
+
+interface EnumerationMap {
   s: number,
   r: number | string
 }
