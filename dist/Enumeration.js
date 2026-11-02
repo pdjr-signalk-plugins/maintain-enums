@@ -13,12 +13,14 @@ class Enumeration {
             throw new Error(`required 'range' property is missing`);
         if (!options[0].hasOwnProperty('map'))
             throw new Error(`required 'map' property is missing`);
-        console.log(JSON.stringify(options));
         this.app = app;
-        this.source = options[0].source;
-        this.range = options[0].range;
+        this.source = getOption(options, 'source');
+        this.range = getOption(options, 'range');
         this.undefinedValue = getOption(options, 'undefinedValue');
-        this.map = options[0].map;
+        this.map = getOption(options, 'map');
+        console.log(JSON.stringify(this.source));
+        console.log(JSON.stringify(this.range));
+        console.log(JSON.stringify(this.undefinedValue));
         console.log(JSON.stringify(this.map));
         //.sort((a: EnumerationMap, b: EnumerationMap) => (a.s - b.s));
         this.map.forEach((m) => {
