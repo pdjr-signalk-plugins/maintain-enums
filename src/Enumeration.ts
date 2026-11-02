@@ -18,15 +18,8 @@ export class Enumeration {
     this.range = getOption(options, 'range');
     this.undefinedValue = getOption(options, 'undefinedValue');
     this.map = getOption(options, 'map');
-    console.log(JSON.stringify(this.source));
-    console.log(JSON.stringify(this.range));
-    console.log(JSON.stringify(this.undefinedValue));
-    console.log(JSON.stringify(this.map));
-    //.sort((a: EnumerationMap, b: EnumerationMap) => (a.s - b.s));
-
-    this.map.forEach((m) => {
-      if (typeof m.r !== typeof this.undefinedValue) throw new Error('type mismatch');
-    });
+ 
+    this.map.forEach((m) => { if (typeof m.r !== typeof this.undefinedValue) throw new Error('type mismatch'); });
 
     /**
      * 
