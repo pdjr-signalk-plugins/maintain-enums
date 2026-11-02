@@ -62,7 +62,7 @@ module.exports = function(app: any) {
           pluginStatus.setDefaultStatus('Stopped: no configured enumerations');
         }
       } catch(e: any) {
-        pluginStatus.setDefaultStatus('Stopped: configuration error');
+        pluginStatus.setDefaultStatus(`Stopped: configuration error (${e.message})`);
         app.debug(`${e.lineNumber}: ${e.message}`);
       }
     },

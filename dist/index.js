@@ -57,7 +57,7 @@ module.exports = function (app) {
                 }
             }
             catch (e) {
-                pluginStatus.setDefaultStatus('Stopped: configuration error');
+                pluginStatus.setDefaultStatus(`Stopped: configuration error (${e.message})`);
                 app.debug(`${e.lineNumber}: ${e.message}`);
             }
         },
