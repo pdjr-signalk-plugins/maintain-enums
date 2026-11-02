@@ -6,7 +6,6 @@ class Enumeration {
         this.app = undefined;
         this.source = '';
         this.range = '';
-        this.undefinedValue = "Not available";
         this.map = [];
         if (!options[0].hasOwnProperty('source'))
             throw new Error(`required 'source' property is missing`);
@@ -15,10 +14,14 @@ class Enumeration {
         if (!options[0].hasOwnProperty('map'))
             throw new Error(`required 'map' property is missing`);
         this.app = app;
-        this.source = getOption(options, 'source');
-        this.range = getOption(options, 'range');
-        this.undefinedValue = getOption(options, 'undefinedValue') || 'Not available';
-        this.map = getOptionArray(options, 'map').sort((a, b) => (a.s - b.s));
+        this.source = getOption(options[0], 'source');
+        this.range = getOption(options[0], 'range');
+        this.undefinedValue = getOption(options, 'undefinedValue');
+        this.map = getOptionArray(options[0], 'map').sort((a, b) => (a.s - b.s));
+        this.map.forEach((m) => {
+            if (typeof m.r !== typeof this.undefinedValue)
+                throw new Error('type mismatch');
+        });
         /**
          *
          * @param objects - an array of arbitrary objects which may contain 'name'

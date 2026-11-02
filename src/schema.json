@@ -32,8 +32,12 @@
             "items": {
               "type": "object",
               "properties": {
-                "s": { "type": "number" },
-                "r": { "type": "string" }            
+                "s": {
+                  "type": "number"
+                },
+                "r": {
+                  "type": [ "number", "string" ]
+                }            
               }
             }
           }

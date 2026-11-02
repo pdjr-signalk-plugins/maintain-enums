@@ -47,7 +47,7 @@ module.exports = function (app) {
                         .skipDuplicates()
                         .onValue((n) => {
                         var nv = enumeration.map.reduce((a, m) => (n >= m.s) ? m.r : a, enumeration.undefinedValue);
-                        app.debug(`mapping ${n} on ${enumeration.source} to '${nv}' on ${enumeration.range}`);
+                        app.debug(`mapping ${n} on ${enumeration.source} to ${(typeof nv === 'string') ? '"' : ''}${nv}${(typeof nv === 'string') ? '"' : ''} on ${enumeration.range}`);
                         delta.addValue(enumeration.range, nv).commit().clear();
                     })));
                     pluginStatus.setDefaultStatus(`Started: maintaining ${pluginConfiguration.enumerations.length} enumeration${(pluginConfiguration.enumerations.length == 1) ? '' : 's'}`);

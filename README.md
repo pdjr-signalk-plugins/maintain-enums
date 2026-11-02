@@ -5,7 +5,7 @@ Create and maintain paths containing enumerated values.
 **maintain-enums** is a
 [Signal K](https://www.signalk.org/)
 plugin which maps numeric values on some specified Signal K path
-into string values on some other path.
+into arbitrary, though often string, values on some other path.
 
 ## System requirements
 
@@ -25,11 +25,12 @@ an enumeration mapping using the following properties:
 mapping and which must return a numeric value.
 
 *range* specifies a Signal K path which is the range of the mapping
-into which string values will be written.
+into which mapped values will be written.
 
-*undefinedValue* specifes the string value to be used if *sourcePath*
-is undefined or does not supply data.
-If not supplied, the default value 'Not available' will be used.
+*undefinedValue* specifes a number or string value to be used if
+*sourcePath* is undefined or does not supply data.
+Note that the type of this value fixes the data type against which
+all range values in *map* will be validated.
 
 *map* is an array of objects each of which is a pair containing a
 source value *s* and a range value *r*.
