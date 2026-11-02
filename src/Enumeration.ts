@@ -17,7 +17,9 @@ export class Enumeration {
     this.source = getOption([options[0]], 'source');
     this.range = getOption([options[0]], 'range');
     this.undefinedValue = getOption(options, 'undefinedValue');
-    this.map = (getOptionArray([options[0]], 'map')).sort((a: EnumerationMap, b: EnumerationMap) => (a.s - b.s));
+    this.map = (getOptionArray([options[0]], 'map'));
+    console.log(JSON.stringify(this.map));
+    //.sort((a: EnumerationMap, b: EnumerationMap) => (a.s - b.s));
 
     this.map.forEach((m) => {
       if (typeof m.r !== typeof this.undefinedValue) throw new Error('type mismatch');
