@@ -14,10 +14,10 @@ export class Enumeration {
     if (!options[0].hasOwnProperty('map')) throw new Error(`required 'map' property is missing`);
 
     this.app = app;
-    this.source = getOption([options[0]], 'source');
-    this.range = getOption([options[0]], 'range');
+    this.source = getOption(options[0], 'source');
+    this.range = getOption(options[0], 'range');
     this.undefinedValue = getOption(options, 'undefinedValue');
-    this.map = (getOption([options[0]], 'map'));
+    this.map = getOption(options[0], 'map');
     console.log(JSON.stringify(this.map));
     //.sort((a: EnumerationMap, b: EnumerationMap) => (a.s - b.s));
 
